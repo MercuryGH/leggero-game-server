@@ -1,7 +1,7 @@
 namespace network.model;
 
 using System;
-using db.dao;
+// using db.dao;
 using protocol;
 
 public class BattlePlayer
@@ -13,7 +13,7 @@ public class BattlePlayer
     public BattlePlayer(ClientState state)
     {
         this.socketState = state;
-		this.playerData = new Player();
+		// this.playerData = new Player();
     }
 
     // 坐标和旋转
@@ -30,7 +30,7 @@ public class BattlePlayer
     public int hp = 100; // 坦克生命值
 
     // 指向该 BattlePlayer 的 dao
-    public Player playerData;
+    // public Player playerData;
 
     // 通过 BattlePlayer 向 socket 发送信息
     public void SendToSocket(BaseMsg msgBase)

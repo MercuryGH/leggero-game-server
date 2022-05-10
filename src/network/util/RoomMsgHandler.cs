@@ -16,8 +16,8 @@ public static partial class MsgHandler
             return;
         }
 
-        msg.win = player.playerData.win;
-        msg.lose = player.playerData.lose;
+        // msg.win = player.playerData.win;
+        // msg.lose = player.playerData.lose;
 
         player.SendToSocket(msg);
     }

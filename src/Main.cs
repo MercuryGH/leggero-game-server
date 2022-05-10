@@ -1,7 +1,5 @@
 using System;
 
-using db.dao;
-using db.util;
 using network;
 using network.protocol;
 using network.util;
@@ -12,28 +10,15 @@ namespace GameServer
 {
     public class GameServerEntry
     {
-        private const int PORT = 6666; // bind port = 6666
+        private const int PORT = 25695; // bind port = CLMXJ
 
         public static void Main(string[] args)
         {
-            // TestSerialize();
-            // return;
-
-            bool flag = DbManager.Connect("tank_game", "127.0.0.1", 3306, "root", "");
-            if (flag == false)
-            {
-                return;
+            try {
+                NetManager.StartLoop(PORT);
+            } catch (Exception e) {
+                Console.WriteLine("Uncaught exception: " + e);
             }
-
-            NetManager.StartLoop(PORT);
-        }
-
-        private static void TestDb()
-        {
-            // bool status = DbManager.RegisterPlayer("testId");
-            // Player player = DbManager.GetPlayerInfo("testId");
-            // Console.WriteLine(player.coin);
-            // Console.WriteLine(status);
         }
 
         private static void TestMsg()

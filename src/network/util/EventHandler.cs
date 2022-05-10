@@ -4,7 +4,7 @@ using network.model;
 
 using System;
 
-using db.util;
+// using db.util;
 using network.model.util;
 using network.protocol;
 using network;
@@ -28,7 +28,7 @@ public static partial class EventHandler
             }
 
             // 保存数据
-            DbManager.UpdatePlayerData(c.battlePlayer.id, c.battlePlayer.playerData);
+            // DbManager.UpdatePlayerData(c.battlePlayer.id, c.battlePlayer.playerData);
 
             // 移除
             BattlePlayerManager.RemovePlayer(c.battlePlayer.id);

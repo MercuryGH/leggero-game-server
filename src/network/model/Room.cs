@@ -154,7 +154,7 @@ public class Room
         // 战斗状态退出
         if (status == Status.IN_BATTLE)
         {
-            player.playerData.lose++;
+            // player.playerData.lose++;
             MsgLeaveBattle msg = new MsgLeaveBattle();
             msg.id = player.id;
             Broadcast(msg);
@@ -219,8 +219,8 @@ public class Room
             PlayerInfo playerInfo = new PlayerInfo();
             playerInfo.id = battlePlayer.id;
             playerInfo.team = battlePlayer.team;
-            playerInfo.win = battlePlayer.playerData.win;
-            playerInfo.lose = battlePlayer.playerData.lose;
+            // playerInfo.win = battlePlayer.playerData.win;
+            // playerInfo.lose = battlePlayer.playerData.lose;
             playerInfo.isOwner = 0;
             if (isOwner(battlePlayer))
             {
@@ -380,12 +380,12 @@ public class Room
         // 某一方胜利，结束战斗，房间变为等待状态
         status = Status.WAITING;
         // 统计信息
-        foreach (string id in playerIds.Keys)
-        {
-            BattlePlayer player = BattlePlayerManager.GetPlayerById(id)!;
-            if (player.team == winCamp) { player.playerData.win++; }
-            else { player.playerData.lose++; }
-        }
+        // foreach (string id in playerIds.Keys)
+        // {
+        //     BattlePlayer player = BattlePlayerManager.GetPlayerById(id)!;
+        //     if (player.team == winCamp) { player.playerData.win++; }
+        //     else { player.playerData.lose++; }
+        // }
 
         // 发送 Result
         MsgBattleResult msg = new MsgBattleResult();
