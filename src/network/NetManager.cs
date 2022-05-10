@@ -198,7 +198,7 @@ public static class NetManager
         readBuff.readIdx += 2;
 
         // 解析协议名
-        string? protoName = BaseMsg.DecodeName(readBuff.bytes, readBuff.readIdx, out int nameCount);
+        string? protoName = MsgManager.DecodeName(readBuff.bytes, readBuff.readIdx, out int nameCount);
         if (protoName == null || protoName == "")
         {
             Console.WriteLine("OnReceiveData MsgBase. DecodeName failed");
@@ -228,7 +228,7 @@ public static class NetManager
             return;
         }
 
-        MethodInfo decodeMethod = typeof(BaseMsg).GetMethod(nameof(BaseMsg.Decode))!;
+        MethodInfo decodeMethod = typeof(BaseMsg).GetMethod(nameof(MsgManager.Decode))!;
         Type? genericType = Type.GetType(NETWORK_PROTOCOL_NAMESPACE_PREFIX + protoName);
         if (genericType == null)
         {
@@ -291,8 +291,8 @@ public static class NetManager
             return;
         }
 
-        byte[] nameBytes = BaseMsg.EncodeName(msg);
-        byte[] bodyBytes = BaseMsg.Encode(msg);
+        byte[] nameBytes = MsgManager.EncodeName(msg);
+        byte[] bodyBytes = MsgManager.Encode(msg);
         int len = nameBytes.Length + bodyBytes.Length;
         byte[] sendBytes = new byte[2 + len];
         sendBytes[0] = (byte)(len % 256);

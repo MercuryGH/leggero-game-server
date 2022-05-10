@@ -59,14 +59,13 @@ namespace GameServer
             MsgSyncTank msgSyncTank = new MsgSyncTank();
             msgSyncTank.x = 100;
             msgSyncTank.y = -20;
-            byte[] bytes = BaseMsg.Encode(msgSyncTank);
+            byte[] bytes = MsgManager.Encode(msgSyncTank);
 
-            MethodInfo decodeMethod = typeof(BaseMsg).GetMethod(nameof(BaseMsg.Decode))!;
+            MethodInfo decodeMethod = typeof(BaseMsg).GetMethod(nameof(MsgManager.Decode))!;
             MethodInfo generic = decodeMethod.MakeGenericMethod(Type.GetType("network.protocol.MsgSyncTank")!);
             BaseMsg msg = (BaseMsg)generic.Invoke(null, new object[] { bytes, 0, bytes.Length })!;
 
-            // BaseMsg msg = BaseMsg.Decode<MsgSyncTank>(bytes, 0, bytes.Length);
-            byte[] secondBytes = BaseMsg.Encode(msg);
+            byte[] secondBytes = MsgManager.Encode(msg);
 
             string s = System.Text.Encoding.UTF8.GetString(bytes);
             Console.WriteLine(s);
