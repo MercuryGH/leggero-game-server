@@ -127,6 +127,29 @@ public static partial class MsgHandler
         room.Broadcast(msg);
     }
 
+    // MsgLose也是广播型的
+    public static void MsgLose(ClientState c, MsgBase msgBase)
+    {
+        MsgLose msg = (MsgLose)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
+        if (player == null)
+        {
+            return;
+        }
+
+        Room? room = RoomManager.GetRoom(player.roomId);
+        if (room == null)
+        {
+            return;
+        }
+        if (room.status != Room.Status.IN_GAME)
+        {
+            return;
+        }
+
+        room.Broadcast(msg);
+    }
+
     // 击中协议
     // public static void MsgHit(ClientState c, MsgBase msgBase)
     // {

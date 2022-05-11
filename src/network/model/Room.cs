@@ -341,9 +341,9 @@ public class Room
         return true;
     }
 
-    private MsgBase GenerateEnterGameMsg(int mapId)
+    private MsgBase GenerateEnterGameMsg(int stageId)
     {
-        MsgEnterGame msg = new MsgEnterGame(playerIds.Count, 1);
+        MsgEnterGame msg = new MsgEnterGame(playerIds.Count, stageId);
 
         // 组装数据包
         // int i = 0;
