@@ -17,10 +17,10 @@ public static class MsgManager
         IncludeFields = true
     };  // System.Text.Json 默认居然是不串行化字段的，坑
 
-    public static byte[] Encode(BaseMsg baseMsg)
+    public static byte[] Encode(MsgBase baseMsg)
     {
         // Debug only
-        if (baseMsg.GetType() != typeof(MsgSyncTank))
+        if (baseMsg.GetType() != typeof(MsgPlayerPosition))
         {
             Console.WriteLine("Debug encode: " + JsonSerializer.Serialize(baseMsg, baseMsg.GetType(), options));
         }
@@ -35,16 +35,16 @@ public static class MsgManager
      * @params offset 从 bytes[offset] 的位置开始解释JSON
      * @params count 到 bytes[offset + count] 的位置停止解释JSON
      */
-    public static BaseMsg? Decode<T>(byte[] bytes, int offset, int count) where T : BaseMsg
+    public static MsgBase? Decode<T>(byte[] bytes, int offset, int count) where T : MsgBase
     {
-        BaseMsg? baseMsg = null;
+        MsgBase? baseMsg = null;
         try
         {
             string s = System.Text.Encoding.UTF8.GetString(bytes, offset, count);
-            baseMsg = (BaseMsg)JsonSerializer.Deserialize<T>(s, options)!;
+            baseMsg = (MsgBase)JsonSerializer.Deserialize<T>(s, options)!;
 
             // DEBUG only
-            if (baseMsg.GetType() != typeof(MsgSyncTank))
+            if (baseMsg.GetType() != typeof(MsgPlayerPosition))
             {
                 Console.WriteLine("Debug encode: " + s);
             }
@@ -61,7 +61,7 @@ public static class MsgManager
      * @params BaseMsg 待发送消息
      * @return bytes 串行化后的 协议名长度 + 协议名 构成的 byte array
      */
-    public static byte[] EncodeName(BaseMsg baseMsg)
+    public static byte[] EncodeName(MsgBase baseMsg)
     {
         byte[] nameBytes = System.Text.Encoding.UTF8.GetBytes(baseMsg.protoName);
         Int16 len = (Int16)nameBytes.Length;

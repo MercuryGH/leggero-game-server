@@ -11,7 +11,7 @@ public sealed class PlayerInfo
 }
 
 // 查询当前所在的房间信息
-public sealed class MsgGetRoomInfo : BaseMsg
+public sealed class MsgGetRoomInfo : MsgBase
 {
     public MsgGetRoomInfo(int playerCnt)
     {
@@ -29,7 +29,7 @@ public sealed class MsgGetRoomInfo : BaseMsg
 }
 
 // 离开房间
-public sealed class MsgLeaveRoom : BaseMsg
+public sealed class MsgLeaveRoom : MsgBase
 {
     public MsgLeaveRoom() { protoName = "MsgLeaveRoom"; }
 
@@ -38,7 +38,7 @@ public sealed class MsgLeaveRoom : BaseMsg
 }
 
 // 开战
-public sealed class MsgStartBattle : BaseMsg
+public sealed class MsgStartBattle : MsgBase
 {
     public MsgStartBattle() { protoName = "MsgStartBattle"; }
 

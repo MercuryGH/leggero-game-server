@@ -7,7 +7,7 @@ using network.protocol;
 public static partial class MsgHandler
 {
     // 创建房间
-    public static void MsgCreateRoom(ClientState c, BaseMsg msgBase)
+    public static void MsgCreateRoom(ClientState c, MsgBase msgBase)
     {
         MsgCreateRoom msg = (MsgCreateRoom)msgBase;
         BattlePlayer? player = c.battlePlayer;
@@ -37,7 +37,7 @@ public static partial class MsgHandler
     }
 
     // 请求房间列表
-    public static void MsgGetRoomList(ClientState c, BaseMsg msgBase)
+    public static void MsgGetRoomList(ClientState c, MsgBase msgBase)
     {
         MsgGetRoomList msg = (MsgGetRoomList)msgBase;
         BattlePlayer? player = c.battlePlayer;
@@ -50,7 +50,7 @@ public static partial class MsgHandler
     }
 
     // 离开房间
-    public static void MsgLeaveRoom(ClientState c, BaseMsg msgBase)
+    public static void MsgLeaveRoom(ClientState c, MsgBase msgBase)
     {
         MsgLeaveRoom msg = (MsgLeaveRoom)msgBase;
         BattlePlayer? player = c.battlePlayer;

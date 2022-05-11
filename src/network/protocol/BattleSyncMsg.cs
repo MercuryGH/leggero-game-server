@@ -2,9 +2,9 @@ namespace network.protocol;
 
 // 同步坦克信息
 [System.Serializable]
-public sealed class MsgSyncTank : BaseMsg
+public sealed class MsgPlayerPosition : MsgBase
 {
-    public MsgSyncTank() { protoName = "MsgSyncTank"; }
+    public MsgPlayerPosition() { protoName = "MsgSyncTank"; }
 
     // sync 位置、旋转、炮塔旋转
     public float x = 0f;
@@ -22,7 +22,7 @@ public sealed class MsgSyncTank : BaseMsg
 
 // 开火
 [System.Serializable]
-public sealed class MsgFire : BaseMsg
+public sealed class MsgFire : MsgBase
 {
     public MsgFire() { protoName = "MsgFire"; }
 
@@ -40,7 +40,7 @@ public sealed class MsgFire : BaseMsg
 
 // 击中（由shooter发送，可以作弊）
 [System.Serializable]
-public sealed class MsgHit : BaseMsg
+public sealed class MsgHit : MsgBase
 {
     public MsgHit() { protoName = "MsgHit"; }
 

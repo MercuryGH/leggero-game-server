@@ -82,7 +82,7 @@ public class Room
         // TODO: 并发控制（可能在同一时间有很多人加入房间）
         playerIds[id] = true; // playerIds.insert(id);
 
-        BaseMsg broadCastedRoomInfo = GenerateGetRoomInfoMsg();
+        MsgBase broadCastedRoomInfo = GenerateGetRoomInfoMsg();
         BroadcastExceptPlayer(broadCastedRoomInfo, id);
 
         return true;
@@ -162,7 +162,7 @@ public class Room
         else // 非状态战斗退出
         {
             // 对除了退出者的全体玩家广播
-            BaseMsg broadCastedRoomInfo = GenerateGetRoomInfoMsg();
+            MsgBase broadCastedRoomInfo = GenerateGetRoomInfoMsg();
             BroadcastExceptPlayer(broadCastedRoomInfo, id);
         }
 
@@ -183,7 +183,7 @@ public class Room
 
 
     // 广播消息
-    public void Broadcast(BaseMsg msg)
+    public void Broadcast(MsgBase msg)
     {
         foreach (string id in playerIds.Keys)
         {
@@ -193,7 +193,7 @@ public class Room
     }
 
     // 除了 exceptId，广播消息
-    public void BroadcastExceptPlayer(BaseMsg msg, string exceptId)
+    public void BroadcastExceptPlayer(MsgBase msg, string exceptId)
     {
         foreach (string id in playerIds.Keys)
         {
@@ -207,7 +207,7 @@ public class Room
     }
 
     // 生成 MsgGetRoomInfo 协议
-    public BaseMsg GenerateGetRoomInfoMsg()
+    public MsgBase GenerateGetRoomInfoMsg()
     {
         MsgGetRoomInfo msg = new MsgGetRoomInfo(playerIds.Count);
 
@@ -329,12 +329,12 @@ public class Room
 
         const int mapId = 1; // 目前只有一个地图，硬编码mapId
 
-        BaseMsg msg = GenerateEnterBattleMsg(mapId);
+        MsgBase msg = GenerateEnterBattleMsg(mapId);
         Broadcast(msg);
         return true;
     }
 
-    private BaseMsg GenerateEnterBattleMsg(int mapId)
+    private MsgBase GenerateEnterBattleMsg(int mapId)
     {
         MsgEnterBattle msg = new MsgEnterBattle(playerIds.Count, 1);
 

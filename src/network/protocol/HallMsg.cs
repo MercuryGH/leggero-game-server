@@ -1,7 +1,7 @@
 namespace network.protocol;
 
 // 查询玩家个人信息
-public sealed class MsgGetAchieve : BaseMsg
+public sealed class MsgGetAchieve : MsgBase
 {
     public MsgGetAchieve() { protoName = "MsgGetAchieve"; }
 
@@ -24,7 +24,7 @@ public sealed class RoomInfo
 
 // 查询房间列表
 // 所有的 request-response 型请求都会复用数据包格式，效率较低
-public sealed class MsgGetRoomList : BaseMsg
+public sealed class MsgGetRoomList : MsgBase
 {
     public MsgGetRoomList(int roomCnt)
     {
@@ -42,7 +42,7 @@ public sealed class MsgGetRoomList : BaseMsg
 }
 
 // 创建房间
-public sealed class MsgCreateRoom : BaseMsg
+public sealed class MsgCreateRoom : MsgBase
 {
     public MsgCreateRoom() { protoName = "MsgCreateRoom"; }
 
@@ -51,7 +51,7 @@ public sealed class MsgCreateRoom : BaseMsg
 }
 
 // 进入房间
-public sealed class MsgEnterRoom : BaseMsg
+public sealed class MsgEnterRoom : MsgBase
 {
     public MsgEnterRoom() { protoName = "MsgEnterRoom"; }
 

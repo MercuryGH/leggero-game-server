@@ -5,7 +5,7 @@ using network.protocol;
 
 public partial class MsgHandler
 {
-    public static void MsgPing(ClientState c, BaseMsg msg)
+    public static void MsgPing(ClientState c, MsgBase msg)
     {
         Console.WriteLine("MsgPing");
 

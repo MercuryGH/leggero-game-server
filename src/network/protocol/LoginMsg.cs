@@ -1,6 +1,6 @@
 namespace network.protocol;
 
-public sealed class MsgRegister : BaseMsg
+public sealed class MsgRegister : MsgBase
 {
     public MsgRegister() { protoName = "MsgRegister"; }
 
@@ -12,7 +12,7 @@ public sealed class MsgRegister : BaseMsg
     public int result = 0;
 }
 
-public sealed class MsgLogin : BaseMsg
+public sealed class MsgLogin : MsgBase
 {
     public MsgLogin() { protoName = "MsgLogin"; }
 
@@ -24,7 +24,7 @@ public sealed class MsgLogin : BaseMsg
     public int result = 0;
 }
 
-public sealed class MsgKick : BaseMsg
+public sealed class MsgKick : MsgBase
 {
     public MsgKick() { protoName = "MsgKick"; }
 

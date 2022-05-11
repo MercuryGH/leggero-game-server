@@ -56,14 +56,14 @@ namespace GameServer
         private static void TestSerialize()
         {
             // 测试JSON序列化反序列化
-            MsgSyncTank msgSyncTank = new MsgSyncTank();
+            MsgPlayerPosition msgSyncTank = new MsgPlayerPosition();
             msgSyncTank.x = 100;
             msgSyncTank.y = -20;
             byte[] bytes = MsgManager.Encode(msgSyncTank);
 
-            MethodInfo decodeMethod = typeof(BaseMsg).GetMethod(nameof(MsgManager.Decode))!;
+            MethodInfo decodeMethod = typeof(MsgBase).GetMethod(nameof(MsgManager.Decode))!;
             MethodInfo generic = decodeMethod.MakeGenericMethod(Type.GetType("network.protocol.MsgSyncTank")!);
-            BaseMsg msg = (BaseMsg)generic.Invoke(null, new object[] { bytes, 0, bytes.Length })!;
+            MsgBase msg = (MsgBase)generic.Invoke(null, new object[] { bytes, 0, bytes.Length })!;
 
             byte[] secondBytes = MsgManager.Encode(msg);
 

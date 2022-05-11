@@ -228,7 +228,7 @@ public static class NetManager
             return;
         }
 
-        MethodInfo decodeMethod = typeof(BaseMsg).GetMethod(nameof(MsgManager.Decode))!;
+        MethodInfo decodeMethod = typeof(MsgBase).GetMethod(nameof(MsgManager.Decode))!;
         Type? genericType = Type.GetType(NETWORK_PROTOCOL_NAMESPACE_PREFIX + protoName);
         if (genericType == null)
         {
@@ -243,7 +243,7 @@ public static class NetManager
             return;
         }
         MethodInfo genericMethod = decodeMethod.MakeGenericMethod(genericType);
-        BaseMsg msg = (BaseMsg)genericMethod.Invoke(null, new object[] { readBuff.bytes, readBuff.readIdx, bodyCount })!;
+        MsgBase msg = (MsgBase)genericMethod.Invoke(null, new object[] { readBuff.bytes, readBuff.readIdx, bodyCount })!;
         readBuff.readIdx += bodyCount;
         readBuff.CheckAndMoveBytes();
         if (msg == null) // 译码出了什么问题
@@ -284,7 +284,7 @@ public static class NetManager
     }
 
     // 不考虑未完整发送的 Send
-    public static void Send(ClientState cs, BaseMsg msg)
+    public static void Send(ClientState cs, MsgBase msg)
     {
         if (cs == null || cs.socket.Connected == false)
         {

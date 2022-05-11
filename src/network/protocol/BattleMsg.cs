@@ -19,7 +19,7 @@ public sealed class TankInfo
 
 // 进入战场
 // 注意与 MsgStartBattle （房主开始战斗） 的区别
-public sealed class MsgEnterBattle : BaseMsg
+public sealed class MsgEnterBattle : MsgBase
 {
     public MsgEnterBattle(int tankCount, int mapId)
     {
@@ -38,7 +38,7 @@ public sealed class MsgEnterBattle : BaseMsg
 }
 
 // 战斗结果
-public sealed class MsgBattleResult : BaseMsg
+public sealed class MsgBattleResult : MsgBase
 {
     public MsgBattleResult() { protoName = "MsgBattleResult"; }
 
@@ -47,7 +47,7 @@ public sealed class MsgBattleResult : BaseMsg
 }
 
 // 玩家退出
-public sealed class MsgLeaveBattle : BaseMsg
+public sealed class MsgLeaveBattle : MsgBase
 {
     public MsgLeaveBattle() { protoName = "MsgLeaveBattle"; }
 

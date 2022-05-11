@@ -1,10 +1,10 @@
 namespace network.protocol;
-public sealed class MsgPing : BaseMsg
+public sealed class MsgPing : MsgBase
 {
     public MsgPing() { protoName = "MsgPing"; }
 }
 
-public sealed class MsgPong : BaseMsg
+public sealed class MsgPong : MsgBase
 {
     public MsgPong() { protoName = "MsgPong"; }
 }

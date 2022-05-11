@@ -1,6 +1,6 @@
 namespace network.protocol;
 
-public abstract class BaseMsg
+public abstract class MsgBase
 {
     public string protoName { get; set; } = "null";
 }

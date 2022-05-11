@@ -39,7 +39,7 @@ public static class RoomManager
     }
 
     // 生成 MsgGetRoomList 协议
-    public static BaseMsg GenerateGetRoomListMsg()
+    public static MsgBase GenerateGetRoomListMsg()
     {
         MsgGetRoomList msg = new MsgGetRoomList(rooms.Count);
 

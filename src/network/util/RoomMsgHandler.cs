@@ -7,7 +7,7 @@ using network.protocol;
 public static partial class MsgHandler
 {
     // 查询战绩
-    public static void MsgGetAchieve(ClientState c, BaseMsg msgBase)
+    public static void MsgGetAchieve(ClientState c, MsgBase msgBase)
     {
         MsgGetAchieve msg = (MsgGetAchieve)msgBase;
         BattlePlayer? player = c.battlePlayer;
@@ -23,7 +23,7 @@ public static partial class MsgHandler
     }
 
     // 获取房间信息
-    public static void MsgGetRoomInfo(ClientState c, BaseMsg msgBase)
+    public static void MsgGetRoomInfo(ClientState c, MsgBase msgBase)
     {
         MsgGetRoomInfo msg = (MsgGetRoomInfo)msgBase;
         BattlePlayer? player = c.battlePlayer;
@@ -42,7 +42,7 @@ public static partial class MsgHandler
     }
 
     // 进入房间
-    public static void MsgEnterRoom(ClientState c, BaseMsg msgBase)
+    public static void MsgEnterRoom(ClientState c, MsgBase msgBase)
     {
         MsgEnterRoom msg = (MsgEnterRoom)msgBase;
         BattlePlayer? player = c.battlePlayer;
@@ -79,7 +79,7 @@ public static partial class MsgHandler
     }
 
     // 请求开始战斗
-    public static void MsgStartBattle(ClientState c, BaseMsg msgBase)
+    public static void MsgStartBattle(ClientState c, MsgBase msgBase)
     {
         MsgStartBattle msg = (MsgStartBattle)msgBase;
         BattlePlayer? player = c.battlePlayer;

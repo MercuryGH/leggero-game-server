@@ -33,7 +33,7 @@ public class BattlePlayer
     // public Player playerData;
 
     // 通过 BattlePlayer 向 socket 发送信息
-    public void SendToSocket(BaseMsg msgBase)
+    public void SendToSocket(MsgBase msgBase)
     {
         NetManager.Send(socketState, msgBase);
     }

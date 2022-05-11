@@ -7,7 +7,7 @@ using network.protocol;
 public static partial class MsgHandler
 {
 
-    private static bool FindIfCheatMovement(BattlePlayer battlePlayer, MsgSyncTank msg)
+    private static bool FindIfCheatMovement(BattlePlayer battlePlayer, MsgPlayerPosition msg)
     {
         if (Math.Abs(battlePlayer.x - msg.x) > 5 ||
     Math.Abs(battlePlayer.y - msg.y) > 5 ||
@@ -19,9 +19,9 @@ public static partial class MsgHandler
     }
 
     // 同步位置协议
-    public static void MsgSyncTank(ClientState c, BaseMsg msgBase)
+    public static void MsgSyncTank(ClientState c, MsgBase msgBase)
     {
-        MsgSyncTank msg = (MsgSyncTank)msgBase;
+        MsgPlayerPosition msg = (MsgPlayerPosition)msgBase;
         BattlePlayer? battlePlayer = c.battlePlayer;
         if (battlePlayer == null)
         {
@@ -59,7 +59,7 @@ public static partial class MsgHandler
     }
 
     // 开火协议
-    public static void MsgFire(ClientState c, BaseMsg msgBase)
+    public static void MsgFire(ClientState c, MsgBase msgBase)
     {
         MsgFire msg = (MsgFire)msgBase;
         BattlePlayer? player = c.battlePlayer;
@@ -83,7 +83,7 @@ public static partial class MsgHandler
     }
 
     // 击中协议
-    public static void MsgHit(ClientState c, BaseMsg msgBase)
+    public static void MsgHit(ClientState c, MsgBase msgBase)
     {
         MsgHit msg = (MsgHit)msgBase;
         BattlePlayer? shooter = c.battlePlayer;
