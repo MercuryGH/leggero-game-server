@@ -26,7 +26,7 @@ namespace GameServer
             string protoName = "MsgRegister";
             // 分发消息
             MethodInfo mi = typeof(MsgHandler).GetMethod(protoName)!;
-            MethodInfo m = typeof(MsgHandler).GetMethod(nameof(MsgHandler.MsgHit))!;
+            MethodInfo m = typeof(MsgHandler).GetMethod(nameof(MsgHandler.MsgLeaveRoom))!;
             Console.WriteLine("Receive " + protoName);
             if (mi != null)
             {
@@ -39,7 +39,7 @@ namespace GameServer
 
             if (m != null)
             {
-                Console.WriteLine(nameof(MsgHandler.MsgHit));
+                Console.WriteLine(nameof(MsgHandler.MsgLeaveRoom));
                 Console.WriteLine("OK");
             }
             else
@@ -55,7 +55,7 @@ namespace GameServer
 
         private static void TestSerialize()
         {
-            // 测试JSON序列化反序列化
+            // 测试JSON串行化反串行化
             MsgPlayerPosition msgSyncTank = new MsgPlayerPosition();
             msgSyncTank.x = 100;
             msgSyncTank.y = -20;

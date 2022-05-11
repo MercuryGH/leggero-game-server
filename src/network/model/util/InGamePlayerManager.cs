@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 using network.model;
 
-public static class BattlePlayerManager
+public static class InGamePlayerManager
 {
     // {playerId: BattlePlayer}
-    static Dictionary<string, BattlePlayer> players = new Dictionary<string, BattlePlayer>();
+    static Dictionary<string, InGamePlayer> players = new Dictionary<string, InGamePlayer>();
 
     public static bool IsOnline(string id)
     {
         return players.ContainsKey(id);
     }
 
-    public static BattlePlayer? GetPlayerById(string id)
+    public static InGamePlayer? GetPlayerById(string id)
     {
         if (players.ContainsKey(id))
         {
@@ -23,7 +23,7 @@ public static class BattlePlayerManager
         return null;
     }
 
-    public static void AddPlayer(string id, BattlePlayer player)
+    public static void AddPlayer(string id, InGamePlayer player)
     {
         players.Add(id, player);
     }

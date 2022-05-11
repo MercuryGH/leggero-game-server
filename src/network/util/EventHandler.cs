@@ -16,22 +16,23 @@ public static partial class EventHandler
         Console.WriteLine("Close");
 
         // 当前玩家正处于战斗中
-        if (c.battlePlayer != null)
+        if (c.inGamePlayer != null)
         {
             // 查找所在房间，并让其离开战场
-            int roomId = c.battlePlayer.roomId;
-            if (roomId >= 0)
+            if (c.inGamePlayer.isInRoom)
             {
+                string roomId = c.inGamePlayer.roomId;
+
                 Room? room = RoomManager.GetRoom(roomId);
                 if (room != null)
-                    room.RemovePlayer(c.battlePlayer.id);
+                    room.RemovePlayer(c.inGamePlayer.id);
             }
 
             // 保存数据
             // DbManager.UpdatePlayerData(c.battlePlayer.id, c.battlePlayer.playerData);
 
             // 移除
-            BattlePlayerManager.RemovePlayer(c.battlePlayer.id);
+            InGamePlayerManager.RemovePlayer(c.inGamePlayer.id);
         }
     }
 

@@ -34,17 +34,17 @@ public static partial class MsgHandler
     //         NetManager.Send(c, msg);
     //         return;
     //     }
-    //     if (c.battlePlayer != null) // 通过此 socket 重复登录
+    //     if (c.inGamePlayer != null) // 通过此 socket 重复登录
     //     {
     //         msg.result = 1;
     //         NetManager.Send(c, msg);
     //         return;
     //     }
 
-    //     if (BattlePlayerManager.IsOnline(msg.id)) // 已经通过另一 socket 登录了
+    //     if (InGamePlayerManager.IsOnline(msg.id)) // 已经通过另一 socket 登录了
     //     {
     //         // 发送踢下线协议
-    //         BattlePlayer alreadyExistedBattlePlayer = BattlePlayerManager.GetPlayerById(msg.id)!;
+    //         BattlePlayer alreadyExistedBattlePlayer = InGamePlayerManager.GetPlayerById(msg.id)!;
     //         MsgKick msgKick = new MsgKick();
     //         msgKick.reason = 0;
     //         alreadyExistedBattlePlayer.SendToSocket(msgKick);
@@ -64,8 +64,8 @@ public static partial class MsgHandler
     //     BattlePlayer battlePlayer = new BattlePlayer(c);
     //     battlePlayer.id = msg.id;
     //     battlePlayer.playerData = playerData;
-    //     BattlePlayerManager.AddPlayer(msg.id, battlePlayer);
-    //     c.battlePlayer = battlePlayer;
+    //     InGamePlayerManager.AddPlayer(msg.id, battlePlayer);
+    //     c.inGamePlayer = battlePlayer;
 
     //     // status = OK
     //     msg.result = 0;

@@ -6,27 +6,12 @@ using network.protocol;
 
 public static partial class MsgHandler
 {
-    // 查询战绩
-    public static void MsgGetAchieve(ClientState c, MsgBase msgBase)
-    {
-        MsgGetAchieve msg = (MsgGetAchieve)msgBase;
-        BattlePlayer? player = c.battlePlayer;
-        if (player == null)
-        {
-            return;
-        }
-
-        // msg.win = player.playerData.win;
-        // msg.lose = player.playerData.lose;
-
-        player.SendToSocket(msg);
-    }
-
     // 获取房间信息
-    public static void MsgGetRoomInfo(ClientState c, MsgBase msgBase)
+    // TODO: 确定客户端
+    public static void MsgGetPlayerInfoInRoom(ClientState c, MsgBase msgBase)
     {
-        MsgGetRoomInfo msg = (MsgGetRoomInfo)msgBase;
-        BattlePlayer? player = c.battlePlayer;
+        MsgGetPlayerInfoInRoom msg = (MsgGetPlayerInfoInRoom)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
         if (player == null)
         {
             return;
@@ -38,51 +23,58 @@ public static partial class MsgHandler
             return;
         }
 
-        player.SendToSocket(room.GenerateGetRoomInfoMsg());
+        player.SendToSocket(room.GenerateGetPlayerInfoInRoomMsg());
+        throw new NotImplementedException();
     }
 
-    // 进入房间
-    public static void MsgEnterRoom(ClientState c, MsgBase msgBase)
+    public static void MsgSelectRole(ClientState c, MsgBase msgBase)
     {
-        MsgEnterRoom msg = (MsgEnterRoom)msgBase;
-        BattlePlayer? player = c.battlePlayer;
+        MsgSelectRole msg = (MsgSelectRole)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
         if (player == null)
         {
             return;
         }
 
-        // 已经在房间里
-        if (player.roomId >= 0)
-        {
-            msg.result = 1; // 进入失败
-            player.SendToSocket(msg);
-            return;
-        }
-        // 获取房间
-        Room? room = RoomManager.GetRoom(msg.id);
+        Room? room = RoomManager.GetRoom(player.roomId);
         if (room == null)
         {
-            msg.result = 1; // 找不到这个房间
-            player.SendToSocket(msg);
             return;
         }
-        // 进入
-        bool flag = room.AddPlayer(player.id); // room.AddPlayer 会自动广播
-        if (flag == false) // 某种原因导致加入失败
+        room.SetPlayerRole(player.id, msg.roldId);
+    }
+
+    public static void MsgLeaveRoom(ClientState c, MsgBase msgBase)
+    {
+        MsgLeaveRoom msg = (MsgLeaveRoom)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
+        if (player == null)
         {
-            msg.result = 1;
+            return;
+        }
+
+        Room? room = RoomManager.GetRoom(player.roomId);
+        if (room == null)
+        {
+            msg.status = 1;
             player.SendToSocket(msg);
             return;
         }
-        msg.result = 0;
+
+        room.RemovePlayer(player.id);
+
+        // 离开房间等价于与注销账号，因此额外添加
+        InGamePlayerManager.RemovePlayer(player.id);
+
+        msg.status = 0;
         player.SendToSocket(msg);
     }
 
     // 请求开始战斗
-    public static void MsgStartBattle(ClientState c, MsgBase msgBase)
+    public static void MsgStartGame(ClientState c, MsgBase msgBase)
     {
-        MsgStartBattle msg = (MsgStartBattle)msgBase;
-        BattlePlayer? player = c.battlePlayer;
+        MsgStartGame msg = (MsgStartGame)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
         if (player == null)
         {
             return;
@@ -91,27 +83,27 @@ public static partial class MsgHandler
         Room? room = RoomManager.GetRoom(player.roomId);
         if (room == null)
         {
-            msg.result = 1;
+            msg.status = 1;
             player.SendToSocket(msg);
             return;
         }
 
         if (!room.isOwner(player)) // 是否是房主
         {
-            msg.result = 1;
+            msg.status = 1;
             player.SendToSocket(msg);
             return;
         }
 
-        bool flag = room.StartBattle();
+        bool flag = room.StartGame();
         if (flag == false) // 开战失败
         {
-            msg.result = 1;
+            msg.status = 1;
             player.SendToSocket(msg);
             return;
         }
 
-        msg.result = 0;
+        msg.status = 0;
         player.SendToSocket(msg);
     }
 }
