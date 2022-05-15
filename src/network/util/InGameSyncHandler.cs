@@ -54,7 +54,7 @@ public static partial class MsgHandler
         battlePlayer.ez = msg.ez;
 
         msg.id = battlePlayer.id;
-        room.Broadcast(msg);
+        room.BroadcastExceptPlayer(msg, msg.id);
     }
 
     public static void MsgOpenDoor(ClientState c, MsgBase msgBase)

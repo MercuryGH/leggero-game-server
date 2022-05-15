@@ -11,19 +11,11 @@ public static partial class MsgHandler
     public static void MsgCreateRoom(ClientState c, MsgBase msgBase)
     {
         MsgCreateRoom msg = (MsgCreateRoom)msgBase;
-        // 用户名冲突
-        if (InGamePlayerManager.GetPlayerById(msg.hostId) != null)
+        InGamePlayer? player = c.inGamePlayer;
+        if (player == null)
         {
-            msg.status = 1;
-            NetManager.Send(c, msg);
             return;
         }
-
-        InGamePlayer player = new InGamePlayer(c);
-        player.id = msg.hostId;
-
-        InGamePlayerManager.AddPlayer(msg.hostId, player);
-        c.inGamePlayer = player;
 
         // 已经在房间里
         if (player.isInRoom)
@@ -32,6 +24,7 @@ public static partial class MsgHandler
             player.SendToSocket(msg);
             return;
         }
+        Console.WriteLine(msg.hostId + " " + player.id);
         Room room = RoomManager.AddRoom(msg.hostId);
         bool flag = room.AddPlayer(player.id);
         if (flag == false)
@@ -58,7 +51,7 @@ public static partial class MsgHandler
         // 已经在房间里
         if (player.isInRoom)
         {
-            msg.status = 1; // 进入失败
+            msg.status = 3; // 进入失败
             player.SendToSocket(msg);
             return;
         }
@@ -74,7 +67,7 @@ public static partial class MsgHandler
         bool flag = room.AddPlayer(player.id); // room.AddPlayer 会自动广播
         if (flag == false) // 某种原因导致加入失败
         {
-            msg.status = 1;
+            msg.status = 2;
             player.SendToSocket(msg);
             return;
         }

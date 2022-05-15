@@ -47,8 +47,8 @@ public class Room
     // 添加玩家
     public bool AddPlayer(string id)
     {
-        InGamePlayer? battlePlayer = InGamePlayerManager.GetPlayerById(id);
-        if (battlePlayer == null)
+        InGamePlayer? inGamePlayer = InGamePlayerManager.GetPlayerById(id);
+        if (inGamePlayer == null)
         {
             Console.WriteLine("room.AddPlayer failed, player is null");
             return false;
@@ -69,13 +69,13 @@ public class Room
             return false;
         }
         // 自动分配阵营，设置房间id
-        battlePlayer.roleId = AutoSetTeam();
-        battlePlayer.roomId = this.id;
+        inGamePlayer.roleId = AutoSetTeam();
+        inGamePlayer.roomId = this.id;
 
         // 设置房主
         if (ownerId == "")
         {
-            ownerId = battlePlayer.id;
+            ownerId = inGamePlayer.id;
         }
 
         // 加入玩家集合
@@ -96,8 +96,8 @@ public class Room
         foreach (string id in playerIds.Keys)
         {
             InGamePlayer player = InGamePlayerManager.GetPlayerById(id)!;
-            if (player.roleId == 1) { count1++; }
-            if (player.roleId == 2) { count2++; }
+            if (player.roleId == 0) { count1++; }
+            if (player.roleId == 1) { count2++; }
         }
 
         Console.WriteLine("DEBUG: " + count1 + " " + count2);
@@ -105,11 +105,11 @@ public class Room
         // 选择人数少的阵营。若人数一致，则选择阵营1
         if (count1 <= count2)
         {
-            return 1;
+            return 0;
         }
         else
         {
-            return 2;
+            return 1;
         }
     }
 
@@ -148,10 +148,13 @@ public class Room
             this.id = ownerId;
         }
 
-        // 退出后，房间为空
+        // 退出后，房间为空（后续广播逻辑也不必再做）
+        Console.WriteLine("******* Room Exited ********");
         if (playerIds.Count == 0)
         {
+            Console.WriteLine("Remove room");
             RoomManager.RemoveRoom(this.id);
+            return true;
         }
 
         // 战斗状态退出
@@ -183,7 +186,7 @@ public class Room
         player.roleId = roleId;
 
         MsgBase broadCastedRoomInfo = GenerateGetPlayerInfoInRoomMsg();
-        BroadcastExceptPlayer(broadCastedRoomInfo, id);
+        Broadcast(broadCastedRoomInfo);
     }
 
     // 选择房主

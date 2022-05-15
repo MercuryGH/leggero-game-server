@@ -1,4 +1,5 @@
-/// ServerInGameMsg 都是 push 型协议，因此不需要Handler
+/// ServerInGameMsg 都是 push 型协议，因此不需要Handler，LoseMsg除外
+// LoseMsg 在 InGameSyncHandler 里里面
 namespace network.protocol;
 
 // 客户端出生点信息

@@ -2,23 +2,40 @@
 
 > 默认的`broadcast`的对象不包含发送者自身，但`broadcast_include_src`将会包含发送者自身。
 
+## 登录`LoginMsg`
+
+### 玩家登录`MsgLogin`
+
+request:
+
+```c
+playerId: string
+```
+
+有关状态码的含义：0为成功，1为失败，其他非零整数可表示失败详细信息（其他封装协议的状态码设计同理）
+
+response:
+
+```c
+status: int
+```
+
+当`playerId`冲突，或socket重复登录时，登录将会失败，`status=1`。
+
 ## 大厅`HallMsg`
 
 ### 创建房间`MsgCreateRoom`
 
 request:
+
 ```C
-hostId: string // 房主id
+hostId: string // 房间名，必定等于房主的playerId
 ```
 
 response:
 ```C
 status: int // 状态码
 ```
-
-有关状态码的含义：0为成功，1为失败，其他非零整数可表示失败详细信息（其他封装协议的状态码设计同理）
-
-当`hostId`冲突时，创建房间将会失败，`status=1`。
 
 ### 根据房主id进入房间`MsgEnterRoom`
 
@@ -64,16 +81,17 @@ roleId编码规则：0为刺客，1为法师。
 
 ### 选择职业`MsgSelectRole`
 
-sync:
+request:
 ```C
 roleId: int
 ```
 
-broadcast:
+response:
 ```C
-playerId: string
-roleId: int
+
 ```
+
+没有`response`，因为`MsgGetPlayerInfoInRoom`会解决一切。
 
 ### 离开房间`MsgLeaveRoom`
 

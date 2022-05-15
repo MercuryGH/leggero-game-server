@@ -25,50 +25,33 @@ public static partial class MsgHandler
     //     NetManager.Send(c, msg); // response
     // }
 
-    // public static void MsgLogin(ClientState c, BaseMsg msgBase)
-    // {
-    //     MsgLogin msg = (MsgLogin)msgBase;
-    //     if (!DbManager.CheckIdAndPw(msg.id, msg.pw))
-    //     {
-    //         msg.result = 1;
-    //         NetManager.Send(c, msg);
-    //         return;
-    //     }
-    //     if (c.inGamePlayer != null) // 通过此 socket 重复登录
-    //     {
-    //         msg.result = 1;
-    //         NetManager.Send(c, msg);
-    //         return;
-    //     }
+    public static void MsgLogin(ClientState c, MsgBase msgBase)
+    {
+        MsgLogin msg = (MsgLogin)msgBase;
 
-    //     if (InGamePlayerManager.IsOnline(msg.id)) // 已经通过另一 socket 登录了
-    //     {
-    //         // 发送踢下线协议
-    //         BattlePlayer alreadyExistedBattlePlayer = InGamePlayerManager.GetPlayerById(msg.id)!;
-    //         MsgKick msgKick = new MsgKick();
-    //         msgKick.reason = 0;
-    //         alreadyExistedBattlePlayer.SendToSocket(msgKick);
-    //         NetManager.Close(alreadyExistedBattlePlayer.socketState);
-    //     }
+        if (c.inGamePlayer != null) // 通过此 socket 重复登录
+        {
+            msg.status = 1;
+            NetManager.Send(c, msg);
+            return;
+        }
 
-    //     // 获取玩家数据
-    //     Player? playerData = DbManager.GetPlayerInfo(msg.id);
-    //     if (playerData == null) // 居然查不到，不太可能
-    //     {
-    //         msg.result = 1;
-    //         NetManager.Send(c, msg);
-    //         return;
-    //     }
+        // duplicate id
+        if (InGamePlayerManager.IsOnline(msg.playerId))
+        {
+            msg.status = 1;
+            NetManager.Send(c, msg);
+            return;
+        }
 
-    //     // 在登陆后，进入战场之前，预加载 BattlePlayer
-    //     BattlePlayer battlePlayer = new BattlePlayer(c);
-    //     battlePlayer.id = msg.id;
-    //     battlePlayer.playerData = playerData;
-    //     InGamePlayerManager.AddPlayer(msg.id, battlePlayer);
-    //     c.inGamePlayer = battlePlayer;
+        InGamePlayer player = new InGamePlayer(c);
+        player.id = msg.playerId;
 
-    //     // status = OK
-    //     msg.result = 0;
-    //     NetManager.Send(c, msg);
-    // }
+        InGamePlayerManager.AddPlayer(msg.playerId, player);
+        c.inGamePlayer = player;
+
+        // status = OK
+        msg.status = 0;
+        NetManager.Send(c, msg);
+    }
 }

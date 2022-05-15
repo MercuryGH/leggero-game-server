@@ -24,7 +24,6 @@ public static partial class MsgHandler
         }
 
         player.SendToSocket(room.GenerateGetPlayerInfoInRoomMsg());
-        throw new NotImplementedException();
     }
 
     public static void MsgSelectRole(ClientState c, MsgBase msgBase)
@@ -41,7 +40,7 @@ public static partial class MsgHandler
         {
             return;
         }
-        room.SetPlayerRole(player.id, msg.roldId);
+        room.SetPlayerRole(player.id, msg.roleId);
     }
 
     public static void MsgLeaveRoom(ClientState c, MsgBase msgBase)
@@ -62,9 +61,6 @@ public static partial class MsgHandler
         }
 
         room.RemovePlayer(player.id);
-
-        // 离开房间等价于与注销账号，因此额外添加
-        InGamePlayerManager.RemovePlayer(player.id);
 
         msg.status = 0;
         player.SendToSocket(msg);

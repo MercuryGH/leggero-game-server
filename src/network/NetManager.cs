@@ -228,7 +228,8 @@ public static class NetManager
             return;
         }
 
-        MethodInfo decodeMethod = typeof(MsgBase).GetMethod(nameof(MsgManager.Decode))!;
+        MethodInfo decodeMethod = typeof(MsgManager).GetMethod(nameof(MsgManager.Decode))!;
+        
         Type? genericType = Type.GetType(NETWORK_PROTOCOL_NAMESPACE_PREFIX + protoName);
         if (genericType == null)
         {

@@ -31,8 +31,7 @@ public sealed class MsgSelectRole : MsgBase
 {
     public MsgSelectRole() { protoName = "MsgSelectRole"; }
 
-    public string playerId = "";
-    public int roldId = 0;
+    public int roleId = 0;
 }
 
 // 离开房间
@@ -60,6 +59,11 @@ public sealed class MsgStartGame : MsgBase
 // 注意与 MsgEnterGame （房主开始战斗） 的区别
 public sealed class MsgEnterGame : MsgBase
 {
+    public MsgEnterGame()
+    {
+        protoName = "MsgEnterGame";
+    }
+
     public MsgEnterGame(int playerCnt, int stageId)
     {
         protoName = "MsgEnterGame";

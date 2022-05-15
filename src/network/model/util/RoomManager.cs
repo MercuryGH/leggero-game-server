@@ -13,20 +13,18 @@ public static class RoomManager
     // 房间键值对 {id: Room}
     public static Dictionary<string, Room> rooms = new Dictionary<string, Room>();
 
-    //创建房间
+    // 创建房间
     public static Room AddRoom(string hostId)
     {
-        // curMaxRoomId++;
         Room room = new Room();
         room.id = hostId;
-        rooms.Add(room.id, room);
+        rooms[hostId] = room;
         return room;
     }
 
     public static bool RemoveRoom(string id)
     {
-        rooms.Remove(id);
-        return true;
+        return rooms.Remove(id);
     }
 
     public static Room? GetRoom(string id)
