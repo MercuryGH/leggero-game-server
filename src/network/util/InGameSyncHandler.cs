@@ -150,6 +150,28 @@ public static partial class MsgHandler
         room.Broadcast(msg);
     }
 
+    public static void MsgRestart(ClientState c, MsgBase msgBase)
+    {
+        MsgRestart msg = (MsgRestart)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
+        if (player == null)
+        {
+            return;
+        }
+
+        Room? room = RoomManager.GetRoom(player.roomId);
+        if (room == null)
+        {
+            return;
+        }
+        if (room.status != Room.Status.IN_GAME)
+        {
+            return;
+        }
+
+        room.BroadcastExceptPlayer(msg, player.id);
+    }
+
     // 击中协议
     // public static void MsgHit(ClientState c, MsgBase msgBase)
     // {

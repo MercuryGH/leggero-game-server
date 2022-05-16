@@ -26,6 +26,11 @@ public sealed class MsgWin : MsgBase
     public MsgWin() { protoName = "MsgWin"; }
 }
 
+public sealed class MsgRestart : MsgBase
+{
+    public MsgRestart() { protoName = "MsgRestart"; }
+}
+
 // 玩家退出
 public sealed class MsgEscape : MsgBase
 {
