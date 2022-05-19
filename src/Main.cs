@@ -17,7 +17,7 @@ namespace GameServer
             try {
                 NetManager.StartLoop(PORT);
             } catch (Exception e) {
-                Console.WriteLine("Uncaught exception: " + e);
+                Console.WriteLine("Uncaught fucking exception: " + e);
             }
         }
 

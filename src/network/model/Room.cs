@@ -216,7 +216,7 @@ public class Room
     {
         foreach (string id in playerIds.Keys)
         {
-            if (id == exceptId)
+            if (id == exceptId || InGamePlayerManager.IsOnline(id) == false)
             {
                 continue;
             }

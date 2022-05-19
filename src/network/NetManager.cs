@@ -56,13 +56,20 @@ public static class NetManager
             // 检查可读对象
             foreach (Socket s in checkReads)
             {
-                if (s == listenfd) // 尝试 accept socket
+                try
                 {
-                    ReadListenfd(s);
+                    if (s == listenfd) // 尝试 accept socket
+                    {
+                        ReadListenfd(s);
+                    }
+                    else // 尝试读取 client socket 
+                    {
+                        ReadClientfd(s);
+                    }
                 }
-                else // 尝试读取 client socket 
+                catch (Exception e)
                 {
-                    ReadClientfd(s);
+                    Console.WriteLine("Uncaught Exception: " + e);
                 }
             }
             Timer(); // 计时，由于Select设置超时时间为 1000ms，所以至多每秒调用一次
@@ -163,7 +170,7 @@ public static class NetManager
         catch (ArgumentOutOfRangeException e)
         {
             Console.WriteLine("ArgumentOutOfRangeException: " + e.ToString());
-        } 
+        }
         catch (Exception e)
         {
             Console.WriteLine("Unknown Exception: " + e.ToString());
@@ -229,7 +236,7 @@ public static class NetManager
         }
 
         MethodInfo decodeMethod = typeof(MsgManager).GetMethod(nameof(MsgManager.Decode))!;
-        
+
         Type? genericType = Type.GetType(NETWORK_PROTOCOL_NAMESPACE_PREFIX + protoName);
         if (genericType == null)
         {
