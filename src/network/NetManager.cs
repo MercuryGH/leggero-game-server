@@ -93,7 +93,7 @@ public static class NetManager
         try
         {
             Socket clientfd = listenfd.Accept();
-            Console.WriteLine("Accept client: " + clientfd.RemoteEndPoint!.ToString());
+            Console.WriteLine("Accept client: " + clientfd.RemoteEndPoint!.ToString() + " in timestamp = " + GetTimeStamp());
             ClientState state = new ClientState(clientfd, GetTimeStamp());
             clients.Add(clientfd, state);
         }
@@ -151,7 +151,7 @@ public static class NetManager
             // 客户端关闭
             if (count == 0)
             {
-                Console.WriteLine("Socket Close " + clientfd.RemoteEndPoint!.ToString());
+                Console.WriteLine("Socket Close " + clientfd.RemoteEndPoint!.ToString() + " in timestamp = " + GetTimeStamp());
                 Close(state);
                 return;
             }
@@ -272,7 +272,7 @@ public static class NetManager
         object[] o = { state, msg };
 
         // Debug
-        if (protoName != "MsgSyncTank")
+        if (protoName != "MsgPlayerPosition")
             Console.WriteLine("Receive " + protoName);
 
         if (mi != null)

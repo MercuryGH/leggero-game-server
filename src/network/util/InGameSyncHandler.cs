@@ -57,6 +57,95 @@ public static partial class MsgHandler
         room.BroadcastExceptPlayer(msg, msg.id);
     }
 
+    public static void MsgEnemyPosition(ClientState c, MsgBase msgBase)
+    {
+        MsgEnemyPosition msg = (MsgEnemyPosition)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
+        if (player == null)
+        {
+            return;
+        }
+
+        Room? room = RoomManager.GetRoom(player.roomId);
+        if (room == null)
+        {
+            return;
+        }
+
+        if (room.status != Room.Status.IN_GAME)
+        {
+            return;
+        }
+
+        room.BroadcastExceptPlayer(msg, player.id);
+    }
+
+    public static void MsgAssassinBomb(ClientState c, MsgBase msgBase)
+    {
+        MsgAssassinBomb msg = (MsgAssassinBomb)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
+        if (player == null)
+        {
+            return;
+        }
+
+        Room? room = RoomManager.GetRoom(player.roomId);
+        if (room == null)
+        {
+            return;
+        }
+        if (room.status != Room.Status.IN_GAME)
+        {
+            return;
+        }
+
+        room.BroadcastExceptPlayer(msg, player.id);
+    }
+
+    public static void MsgMagicianTrigger(ClientState c, MsgBase msgBase)
+    {
+        MsgMagicianTrigger msg = (MsgMagicianTrigger)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
+        if (player == null)
+        {
+            return;
+        }
+
+        Room? room = RoomManager.GetRoom(player.roomId);
+        if (room == null)
+        {
+            return;
+        }
+        if (room.status != Room.Status.IN_GAME)
+        {
+            return;
+        }
+
+        room.BroadcastExceptPlayer(msg, player.id);
+    }
+
+    public static void MsgEnemyDied(ClientState c, MsgBase msgBase)
+    {
+        MsgEnemyDied msg = (MsgEnemyDied)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
+        if (player == null)
+        {
+            return;
+        }
+
+        Room? room = RoomManager.GetRoom(player.roomId);
+        if (room == null)
+        {
+            return;
+        }
+        if (room.status != Room.Status.IN_GAME)
+        {
+            return;
+        }
+
+        room.BroadcastExceptPlayer(msg, player.id);
+    }
+
     public static void MsgOpenDoor(ClientState c, MsgBase msgBase)
     {
         MsgOpenDoor msg = (MsgOpenDoor)msgBase;
@@ -103,10 +192,9 @@ public static partial class MsgHandler
         room.Broadcast(msg);
     }
 
-    // 开火协议
-    public static void MsgFire(ClientState c, MsgBase msgBase)
+    public static void MsgImmobilized(ClientState c, MsgBase msgBase)
     {
-        MsgFire msg = (MsgFire)msgBase;
+        MsgImmobilized msg = (MsgImmobilized)msgBase;
         InGamePlayer? player = c.inGamePlayer;
         if (player == null)
         {
@@ -123,8 +211,7 @@ public static partial class MsgHandler
             return;
         }
 
-        msg.id = player.id;
-        room.Broadcast(msg);
+        room.BroadcastExceptPlayer(msg, player.id);
     }
 
     // MsgLose也是广播型的
@@ -171,50 +258,6 @@ public static partial class MsgHandler
 
         room.BroadcastExceptPlayer(msg, player.id);
     }
-
-    // 击中协议
-    // public static void MsgHit(ClientState c, MsgBase msgBase)
-    // {
-    //     throw new NotImplementedException();
-    //     MsgHit msg = (MsgHit)msgBase;
-    //     InGamePlayer? shooter = c.inGamePlayer;
-    //     if (shooter == null) 
-    //     {
-    //         return;
-    //     }
-
-    //     InGamePlayer? shootee = InGamePlayerManager.GetPlayerById(msg.targetId);
-    //     if (shootee == null)
-    //     {
-    //         return;
-    //     }
-
-    //     Room? room = RoomManager.GetRoom(shooter.roomId);
-    //     if (room == null)
-    //     {
-    //         return;
-    //     }
-
-    //     if (room.status != Room.Status.IN_BATTLE)
-    //     {
-    //         return;
-    //     }
-    //     // 发送者校验 + 在同一房间校验
-    //     if (shooter.id != msg.id || shooter.roomId != shootee.roomId)
-    //     {
-    //         return;
-    //     }
-
-    //     // 状态
-    //     int damage = 35; // 硬编码伤害，未进行计算
-    //     // shootee.hp -= damage;
-
-    //     // 广播
-    //     msg.id = shooter.id;
-    //     // msg.hp = shooter.hp;
-    //     msg.damage = damage;
-    //     room.Broadcast(msg);
-    // }
 }
 
 
