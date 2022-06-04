@@ -19,7 +19,7 @@ public static class NetManager
 
     private static List<Socket> checkReads = new List<Socket>(); // Select的检查列表
 
-    public const long pingInterval = 30; // 30s 不 ping 则认为掉线
+    public const long pingInterval = 60; // 60s 不 ping 则认为掉线
     private const string NETWORK_PROTOCOL_NAMESPACE_PREFIX = "network.protocol.";
 
     // 服务端不使用 receiveQueue 暂存接收结果，这是因为服务端会进行 busy select，而非客户端固定每帧处理几条接收的消息

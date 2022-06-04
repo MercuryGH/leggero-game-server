@@ -169,9 +169,9 @@ public static partial class MsgHandler
         room.Broadcast(msg);
     }
 
-    public static void MsgGetItem(ClientState c, MsgBase msgBase)
+    public static void MsgGetBomb(ClientState c, MsgBase msgBase)
     {
-        MsgGetItem msg = (MsgGetItem)msgBase;
+        MsgGetBomb msg = (MsgGetBomb)msgBase;
         InGamePlayer? player = c.inGamePlayer;
         if (player == null)
         {
@@ -218,6 +218,28 @@ public static partial class MsgHandler
     public static void MsgLose(ClientState c, MsgBase msgBase)
     {
         MsgLose msg = (MsgLose)msgBase;
+        InGamePlayer? player = c.inGamePlayer;
+        if (player == null)
+        {
+            return;
+        }
+
+        Room? room = RoomManager.GetRoom(player.roomId);
+        if (room == null)
+        {
+            return;
+        }
+        if (room.status != Room.Status.IN_GAME)
+        {
+            return;
+        }
+
+        room.Broadcast(msg);
+    }
+
+    public static void MsgWin(ClientState c, MsgBase msgBase)
+    {
+        MsgWin msg = (MsgWin)msgBase;
         InGamePlayer? player = c.inGamePlayer;
         if (player == null)
         {

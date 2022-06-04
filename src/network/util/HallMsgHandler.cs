@@ -63,6 +63,13 @@ public static partial class MsgHandler
             player.SendToSocket(msg);
             return;
         }
+        // 房间的房主就是自己，不知道出了什么BUG
+        if (room.playerIds.Count == 0 || room.isOwner(player))
+        {
+            msg.status = 4;
+            player.SendToSocket(msg);
+            return;
+        }
         // 进入
         bool flag = room.AddPlayer(player.id); // room.AddPlayer 会自动广播
         if (flag == false) // 某种原因导致加入失败

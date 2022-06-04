@@ -72,9 +72,9 @@ public sealed class MsgOpenDoor : MsgBase
     public string playerId = "";
 }
 
-public sealed class MsgGetItem : MsgBase
+public sealed class MsgGetBomb : MsgBase
 {
-    public MsgGetItem() { protoName = "MsgGetItem"; }
+    public MsgGetBomb() { protoName = "MsgGetBomb"; }
 
     public int itemId = 0;
     public string playerId = "";

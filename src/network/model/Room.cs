@@ -14,7 +14,7 @@ public class Room
     public string id = "Default Room Name"; // 房间 id
     public Dictionary<string, bool> playerIds { get; private set; } = new Dictionary<string, bool>(); // 玩家列表，其实是HashSet
 
-    private string ownerId = ""; // 房主 id
+    public string ownerId = ""; // 房主 id
 
     public enum Status // 房间状态
     {
@@ -139,15 +139,6 @@ public class Room
         player.roleId = 0;
         player.isInRoom = false;
 
-        // 自动设置房主
-        if (ownerId == player.id)
-        {
-            ownerId = AutoSwitchOwner();
-
-            // 房间id = 房主id
-            this.id = ownerId;
-        }
-
         // 退出后，房间为空（后续广播逻辑也不必再做）
         Console.WriteLine("******* Room Exited ********");
         if (playerIds.Count == 0)
@@ -155,6 +146,15 @@ public class Room
             Console.WriteLine("Remove room");
             RoomManager.RemoveRoom(this.id);
             return true;
+        }
+
+        // 自动设置房主
+        if (ownerId == player.id)
+        {
+            ownerId = AutoSwitchOwner();
+
+            // 房间id = 房主id
+            this.id = ownerId;
         }
 
         // 战斗状态退出
