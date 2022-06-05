@@ -189,7 +189,7 @@ public static partial class MsgHandler
         }
 
         msg.playerId = player.id;
-        room.Broadcast(msg);
+        room.BroadcastExceptPlayer(msg, player.id);
     }
 
     public static void MsgImmobilized(ClientState c, MsgBase msgBase)

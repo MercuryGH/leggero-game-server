@@ -68,6 +68,11 @@ public class Room
             Console.WriteLine("room.AddPlayer fail, already in this room");
             return false;
         }
+
+        // 加入玩家集合
+        // TODO: 并发控制（可能在同一时间有很多人加入房间）
+        playerIds[id] = true; // playerIds.insert(id);
+
         // 自动分配阵营，设置房间id
         inGamePlayer.roleId = AutoSetTeam();
         inGamePlayer.roomId = this.id;
@@ -77,10 +82,6 @@ public class Room
         {
             ownerId = inGamePlayer.id;
         }
-
-        // 加入玩家集合
-        // TODO: 并发控制（可能在同一时间有很多人加入房间）
-        playerIds[id] = true; // playerIds.insert(id);
 
         MsgBase broadCastedRoomInfo = GenerateGetPlayerInfoInRoomMsg();
         BroadcastExceptPlayer(broadCastedRoomInfo, id);
@@ -95,7 +96,11 @@ public class Room
         int count2 = 0;
         foreach (string id in playerIds.Keys)
         {
-            InGamePlayer player = InGamePlayerManager.GetPlayerById(id)!;
+            InGamePlayer? player = InGamePlayerManager.GetPlayerById(id);
+            if (player == null)
+            {
+                continue;
+            }
             if (player.roleId == 0) { count1++; }
             if (player.roleId == 1) { count2++; }
         }
