@@ -16,7 +16,7 @@ public sealed class MsgPlayerPosition : MsgBase
     // public float gunX = 0f;
 
     // broadcast
-    public string id = ""; // 服务端广播时，补充发送 MsgSyncTank 的玩家id
+    public string id = ""; // 服务端广播时，补充发送 MsgPlayerPosition 的玩家id
 }
 
 // 同步敌人位置
