@@ -79,6 +79,19 @@ players: PlayerInfo[]
 
 roleId编码规则：0为刺客，1为法师。
 
+另外，考虑到玩家加入房间有时间延迟，`MsgGetPlayerInfoInRoom`也可以由req-res形式完成：
+
+request:
+
+```
+```
+
+response:
+
+```
+players: PlayerInfo[]
+```
+
 ### 选择职业`MsgSelectRole`
 
 request:
@@ -148,6 +161,8 @@ x, y, z, ex, ey, ez: float
 id: string
 ```
 
+### 敌人的位置同步`MsgEnemyPosition`
+
 ### 门的开启`MsgOpenDoor`
 
 门只能开启不能关闭。
@@ -178,7 +193,35 @@ playerId: string  // 谁拾取的物品
 
 ### 不同角色不同技能的施放
 
-TODO
+#### 刺客释放炸弹`MsgAssassinBomb`
+
+sync and broadcast:
+```C
+x: double
+y: double
+z: double
+fx: double
+fy: double
+fz: double
+```
+
+#### 法师引爆炸弹`MsgMagicianTrigger`
+
+sync and broadcast:
+
+```c
+x: double
+y: double
+z: double
+```
+
+### 敌人死亡`MsgEnemyDied`
+
+sync and broadcast:
+
+```c
+enemyId: string
+```
 
 ### 游戏失败`MsgLose`
 

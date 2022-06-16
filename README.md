@@ -5,9 +5,21 @@
 * Ubuntu 20.04 (x86-64)
 * .NET 6.0.201
 
-### Package Example
+## Build the project
 
-A package that `sync` for player position:
+First add dependency of MySQL Connector in the simplest way:
 
-<img src="doc/img/wireshark.png"/>
+```
+dotnet add package MySql.Data 
+```
 
+Then you can Build debug:
+```
+dotnet build
+```
+
+or Build release:
+
+```
+dotnet build --configuration Release
+```
